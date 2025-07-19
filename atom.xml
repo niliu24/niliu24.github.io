@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://niliu24.github.io</id>
+    <title>技术随笔</title>
+    <link href="https://niliu24.github.io" />
+    <updated>2025-07-18T19:52:40.000Z</updated>
+    <category term="hexo" />
+    <entry>
+        <id>https://niliu24.github.io/2025/07/19/%E8%AE%BE%E7%BD%AEshoka%E4%B8%BB%E9%A2%98/</id>
+        <title>设置shoka主题</title>
+        <link rel="alternate" href="https://niliu24.github.io/2025/07/19/%E8%AE%BE%E7%BD%AEshoka%E4%B8%BB%E9%A2%98/"/>
+        <content type="html">&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYT90YWI9cmVhZG1lLW92LWZpbGU=&#34;&gt;shoka-theme&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;配置shoka主题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#配置shoka主题&#34;&gt;#&lt;/a&gt; 配置 shoka 主题&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;在 &lt;em&gt;_config.yml&lt;/em&gt; 文件中设置  &lt;code&gt;theme：shoka&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;问题排查&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#问题排查&#34;&gt;#&lt;/a&gt; 问题排查&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;执行 &lt;code&gt;hexo g&lt;/code&gt;  时提示如下错误&lt;/p&gt;
+  &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;Prism&amp;#x27;s Diff Highlight plugin requires the Diff language definition (prism-diff.js).Make sure the language definition is loaded or use Prism&amp;#x27;s Autoloader plugin.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ERROR Process failed: languages/README.md&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;TypeError: pangu.spacing is not a function&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    at /home/yangjian/Workspace/Project/blogs/node_modules/hexo-renderer-multi-markdown-it/lib/renderer/markdown-it-prism/index.js:42:33&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Prism&#39;s Diff Highlight&lt;/code&gt;  插件缺少 Diff 语言定义，你需要加载 prism-diff.js，否则 Diff 语法高亮无法使用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;解决方法：在 index.js 里添加加载 Diff 语言的代码：&lt;/li&gt;
+&lt;/ul&gt;
+ &lt;figure class=&#34;highlight js&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// 在 require(&amp;#x27;prismjs/components/&amp;#x27;) 后面加上&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;title function_&#34;&gt;loadLanguages&lt;/span&gt;([&lt;span class=&#34;string&#34;&gt;&amp;#x27;diff&amp;#x27;&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;TypeError: pangu.spacing is not a function&lt;/code&gt; ，说明 pangu 包没有正确导出 spacing 方法。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;解决方法：将  &lt;code&gt;pangu.spacing()&lt;/code&gt;  修改为  &lt;code&gt;pangu.spacingText()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+ &lt;figure class=&#34;highlight js&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;env.&lt;span class=&#34;property&#34;&gt;content&lt;/span&gt; = pangu.&lt;span class=&#34;title function_&#34;&gt;spacingText&lt;/span&gt;(env.&lt;span class=&#34;property&#34;&gt;content&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        <category term="hexo" />
+        <updated>2025-07-18T19:52:40.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://niliu24.github.io/2025/07/19/%E5%9F%BA%E4%BA%8Ehexo%E5%92%8Cgithub%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</id>
+        <title>基于hexo和github搭建静态博客</title>
+        <link rel="alternate" href="https://niliu24.github.io/2025/07/19/%E5%9F%BA%E4%BA%8Ehexo%E5%92%8Cgithub%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/"/>
+        <content type="html">&lt;h2 id=&#34;搭建博客&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#搭建博客&#34;&gt;#&lt;/a&gt; 搭建博客&lt;/h2&gt;
+&lt;h3 id=&#34;准备环境&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#准备环境&#34;&gt;#&lt;/a&gt; 准备环境&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;安装  &lt;code&gt;git&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装  &lt;code&gt;node.js&lt;/code&gt; ：使用 &lt;code&gt;nvm&lt;/code&gt;  安装  &lt;code&gt;nodejs&lt;/code&gt;  的步骤如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;安装  &lt;code&gt;nvm&lt;/code&gt; ： &lt;code&gt;curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;将安装成功后的配置信息添加到 shell 配置文件：&lt;/p&gt;
+ &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;export NVM_DIR=&amp;quot;$HOME/.nvm&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[ -s &amp;quot;$NVM_DIR/nvm.sh&amp;quot; ] &amp;amp;&amp;amp; \. &amp;quot;$NVM_DIR/nvm.sh&amp;quot;  # This loads nvm&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[ -s &amp;quot;$NVM_DIR/bash_completion&amp;quot; ] &amp;amp;&amp;amp; \. &amp;quot;$NVM_DIR/bash_completion&amp;quot;  # This loads nvm bash_completion&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;重启加载 shell 配置文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 &lt;code&gt;nvm ls-remote&lt;/code&gt;  查看可用的 node 版本&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 &lt;code&gt;nvm install x.x.x&lt;/code&gt;  安装指定版本 node&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;因为网络原因， &lt;code&gt;npm&lt;/code&gt;  安装包时速度很慢，可以替换为 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9ucG1taXJyb3IuY29tLw==&#34;&gt;cnpm&lt;/span&gt;:  &lt;code&gt;npm install -g cnpm&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装 hexo 框架： &lt;code&gt;npm install hexo-cli -g&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;配置github仓库&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#配置github仓库&#34;&gt;#&lt;/a&gt; 配置 github 仓库&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;创建 github 仓库：登录 GitHub，新建名为  &lt;code&gt;&amp;lt;username&amp;gt;.github.io&lt;/code&gt;  的仓库（如用户名为 a，&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cDovL3huLS1hLWJyNmEwc3g4aHEzYzIzeWk0Ym91OHEuZ2l0aHViLmlv&#34;&gt;则仓库名必须为 a.github.io&lt;/span&gt; ）&lt;/li&gt;
+&lt;li&gt;配置 ssh 密钥：将本地 &lt;em&gt;.ssh&lt;/em&gt; 目录下的 &lt;strong&gt;id_rsa.pub&lt;/strong&gt; 文件内容添加到 github 的 ssh 密钥中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;初始化本地博客&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#初始化本地博客&#34;&gt;#&lt;/a&gt; 初始化本地博客&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;初始化本地博客： &lt;code&gt;hexo init &amp;lt;folder&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;生成博客： &lt;code&gt;hexo g&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;启动博客进行预览： &lt;code&gt;hexo s&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;部署到github&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#部署到github&#34;&gt;#&lt;/a&gt; 部署到 github&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;安装部署插件：在项目目录执行 &lt;code&gt;npm install hexo-deployer-git --save&lt;/code&gt;  安装 Git 部署插件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;修改配置文件：找到 &lt;code&gt;_config.yml&lt;/code&gt;  文件，修改如下内容：&lt;/p&gt;
+  &lt;figure class=&#34;highlight yml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;url:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;https://niliu24.github.io&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;deploy:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attr&#34;&gt;type:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;git&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attr&#34;&gt;repo:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;https://github.com/&amp;lt;username&amp;gt;/&amp;lt;username&amp;gt;.github.io.git&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attr&#34;&gt;branch:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;main&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;推送到 github： &lt;code&gt;hexo d&lt;/code&gt;  (或 &lt;code&gt;hexo clean &amp;amp;&amp;amp; hexo g &amp;amp;&amp;amp; hexo d&lt;/code&gt; )&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;配置博客&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#配置博客&#34;&gt;#&lt;/a&gt; 配置博客&lt;/h2&gt;
+&lt;h3 id=&#34;设置主题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设置主题&#34;&gt;#&lt;/a&gt; 设置主题&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;/2025/07/19/%E8%AE%BE%E7%BD%AEshoka%E4%B8%BB%E9%A2%98/&#34; title=&#34;设置shoka主题&#34;&gt;设置shoka主题&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        <category term="hexo" />
+        <updated>2025-07-18T18:53:11.000Z</updated>
+    </entry>
+</feed>
